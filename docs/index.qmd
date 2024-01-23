@@ -1,12 +1,20 @@
 ---
 title: "My project"
+author: "Phaniwa"
+date: today
 format: html
+    toc: true
 editor: visual
+bibliography: references.bib
 ---
 
-**Project description**
+#Introduction
 
-Data from household surveys in two neighborhoods, focusing on practices related to the management of sanitation facilities (latrines and tanks).
+In Abidjan (Cote d'Ivoire), the situation of sanitation was exacerbated by the sociopolitical and military crisis of 2002-2011 (Ouattara et al. 2017). This study was carried out in two low-income parts of Abidjan in order to understand the behavior and practices of the population in terms of managing sanitation facilities, as well as to assess the diseases they face.
+
+#Methods
+
+The data were collected from household surveys in two low_income areas of Abidjan. Indeed, the surveys included 101 households in Abobo and 106 households from Yopougon. The survey was focusing on practices related to the management of sanitation facilities (latrines and tanks).
 
 **Import**
 
@@ -15,8 +23,104 @@ library(readxl)
 ```
 
 ```{r}
-read_excel(here::here("data/raw/Survey_data.xlsx"))
+read_excel(here::here("data/raw/Survey_base.xlsx"))
 ```
+
+```{r}
+library(tidyverse)
+```
+
+Import data
+
+```{r}
+read_excel(here::here("data/raw/Survey_base.xlsx"))
+
+data_raw <- read_excel(here::here ("data/raw/Survey_base.xlsx"))
+```
+
+**Rename column**
+
+```{r}
+data_clean<-data_raw|>
+  rename(stay_time = living_time,
+         lat_facilities = latrine_presence,
+         facilities_type = latrine_type,
+         lat_use = using_latrines,
+         nb_user = users,
+         facilities_loc = location,
+         lat_care = latrine_cleaning,
+         clean_freq_wk = cleaning_freqce_wk,
+         tk_status = tank_operation,
+         empty_freq_yr = emptying_frqce_yr,
+         empty_mode = emptying_mode,
+         empty_price = emptying_price,
+         wastwat_dispos = household_wastewater,
+         waste_cont = garbage_cont,
+         waste_cont_loc = garbage_loc,
+         cont_empy_wk = garbage_emptying_wk,
+         common_ill = common_diseases
+         ) 
+  data_ready<- data_clean [,-c(1,4,6)]
+  
+```
+
+**Harmonised data**
+
+```{r}
+data_clean <- data_ready|>
+  mutate(nb_user_new=case_when(
+    nb_user == "1_3"~"2",
+    nb_user == "4_6"~"5",
+    nb_user == "7_10"~"8.5",
+    nb_user == ">10"~ "10"
+  )) |>
+  mutate(clean_freq = case_when(
+    clean_freq_wk == "1_3" ~ "2",
+    clean_freq_wk == ">4"~"4"
+  )) |>
+  mutate(lat_nb_new= case_when(
+    latrines_nb == "1_5"~"3",
+    latrines_nb == "6_10"~"8",
+    latrines_nb == ">10"~"10"
+  )) |>
+  mutate(empty_price_new= case_when(
+    empty_price == "10000_20000"~"15000",
+    empty_price == "20000_40000"~"30000",
+    empty_price == ">40000"~"40000"
+  )) |>
+  mutate(cont_empty_wk=case_when(
+    cont_empy_wk == "1_3"~"2",
+    cont_empy_wk == "4_7"~"5.5"
+  )) |>
+mutate(nb_user_new = as.numeric(nb_user_new))|>
+mutate(clean_freq= as.numeric(clean_freq)) |>
+mutate(lat_nb_new= as.numeric(lat_nb_new)) |>
+mutate(empty_price_new = as.numeric(empty_price_new)) |>
+mutate(cont_empty_wk = as.numeric(cont_empty_wk))
+  
+
+```
+
+**Data per area**
+
+```{r}
+library(dplyr)
+yop_data <- data_clean |>
+  filter(area_name == 'Yopougon') 
+  
+Abobo_data <- data_clean |>
+  filter(area_name == 'Abobo')
+
+```
+
+```         
+```
+
+#Results
+
+#Conclusions
+
+#References
 
 ## Quarto
 
