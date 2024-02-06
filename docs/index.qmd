@@ -4,6 +4,7 @@ author: "Phaniwa"
 date: today
 format: html
     toc: true
+execute:
 editor: visual
 bibliography: references.bib
 ---
@@ -117,6 +118,105 @@ Abobo_data <- data_clean |>
 ```
 
 #Results
+
+```{r}
+lat_use_per_area<-data_clean|>
+  filter(!is.na(lat_nb_new))  |> 
+   group_by(area_name)|>
+summarise(
+ count = n(),
+ mean = mean(lat_nb_new),
+ sd = sd(lat_nb_new),
+ median = median(lat_nb_new),
+ min = min(lat_nb_new),
+ max = max(lat_nb_new)
+ )
+ 
+```
+
+```{r}
+library(gt)
+library(knitr)
+```
+
+```{r}
+lat_use_per_area |> 
+    gt() |> 
+    tab_header(title = "Latrines using by study areas",
+               subtitle = "Data from 2 neighborhoods") |>
+    fmt_number(columns = count:max, decimals = 0) |> 
+    cols_label(area_name = "study areas")
+```
+
+@tbl-use-lat-areas highlights the fact that people in the different neighborhoods studied have identical latrine use habits.
+
+```{r}
+#| label: tbl-use-lat-areas
+#| tbl-cap: "Latrines using by study areas. Data from 2 neighborhoods."
+lat_use_per_area |> 
+    rename(`study areas` = area_name)
+```
+
+```{r}
+library(questionr)
+ describe (yop_data$tk_status)
+ describe (Abobo_data$tk_status)
+
+```
+
+```{r}
+tank_statut_Abobo<-c("failure_presence", "no_failure","NA")
+Number<-c(35, 56 ,10)
+Frequency<-c(34.6, 55.4 , 9.9)
+
+tb1 <-data.frame(tank_statut_Abobo,Number,Frequency)
+  
+```
+
+```{r}
+tank_statut_Yop<-c("failure_presence", "no_failure","NA")
+Number<-c(44, 59 ,3)
+Frequency<-c(41.5, 55.6 , 2.8)
+
+tb2 <-data.frame(tank_statut_Yop,Number,Frequency)
+```
+
+```{r}
+ggplot(data = tb1,
+   mapping = aes(x= tank_statut_Abobo, 
+                     y= Frequency,
+                 fill = tank_statut_Abobo))+
+  geom_col()
+
+
+```
+
+```{r}
+
+
+ggplot(data = tb2,
+   mapping = aes(x= tank_statut_Yop, 
+                     y= Frequency,
+                 fill = tank_statut_Yop))+
+  geom_col()
+
+```
+
+The results show that a lot of tanks are dysfunctional in the study area. In Abobo 45% of septik tank doesn't work well, while in Yopougon it concerns 49% of septik tank .
+
+```{r}
+layout(matrix(1:2,1,2))
+ggplot(data = tb1,
+   mapping = aes(x= tank_statut_Abobo, 
+                     y= Frequency,
+                 fill = tank_statut_Abobo))+
+  geom_col();
+ggplot(data = tb2,
+   mapping = aes(x= tank_statut_Yop, 
+                     y= Frequency,
+                 fill = tank_statut_Yop))+
+  geom_col()
+```
 
 #Conclusions
 
