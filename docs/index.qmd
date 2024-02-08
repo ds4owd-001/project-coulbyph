@@ -218,7 +218,46 @@ ggplot(data = tb2,
   geom_col()
 ```
 
+Regarding the health status of the population, the findings highlighted malaria and typhoid fever as the most common diseases in the study area. In the municipality of Abobo , a large proportion of the population was affected by typhoid fever (77%), and only a few by malaria (17%). As far as Yopougon is concerned, malaria is the most common, representing 70%, while typhoid fever is 26%.
+
+```{r}
+describe (yop_data$common_ill)
+```
+
+```{r}
+
+Deseas_Abobo<-c("Malaria","Typhoid_fever","Infections","Diarrhea","na")
+Frequency<-c(16.8 , 77.2 , 1.9 , 0 ,3.9)
+
+tb3 <-data.frame(Deseas_Abobo,Frequency)
+```
+
+```{r}
+ggplot(data = tb3,
+   mapping = aes(x= Deseas_Abobo,
+                 y= Frequency
+                 ))+
+  geom_col()
+```
+
+```{r}
+Deseas_Yopougon<-c("Malaria","Typhoid_fever","Infections","Diarrhea","na")
+Frequency<-c(68.8 , 26.4 , 2.8 , 1.8 ,0)
+
+tb4 <-data.frame(Deseas_Yopougon,Frequency)
+```
+
+```{r}
+ggplot(data = tb4,
+   mapping = aes(x= Deseas_Yopougon,
+                 y= Frequency
+                 ))+
+  geom_col()
+```
+
 #Conclusions
+
+This research shows that people living in the townships of Abobo and Yopougon use shared latrines. This is contributing to septic tank failure, as well as the occurrence of diseases such as malaria and typhoid fever. However, promoting awareness and establishing sustainable sanitation management initiatives could help to improve people's living conditions.
 
 #References
 
