@@ -1,19 +1,23 @@
 ---
-title: "My project"
-author: "Phaniwa"
+title: "Behavior and practices of managing sanitation facilties in two low-income areas of Abidjan, Cote d'Ivoire"
+author:
+- name: "Phaniwa Zie Zoumana Coulibaly"
+  orcid: "0000-0002-3096-9061"
 date: today
-format: html
+format: 
+  html:
     toc: true
 execute:
+  warning: false
+  echo: true
 editor: visual
-bibliography: references.bib
 ---
 
-#Introduction
+# Introduction
 
 In Abidjan (Cote d'Ivoire), the situation of sanitation was exacerbated by the sociopolitical and military crisis of 2002-2011 (Ouattara et al. 2017). This study was carried out in two low-income parts of Abidjan in order to understand the behavior and practices of the population in terms of managing sanitation facilities, as well as to assess the diseases they face.
 
-#Methods
+# Methods
 
 The data were collected from household surveys in two low_income areas of Abidjan. Indeed, the surveys included 101 households in Abobo and 106 households from Yopougon. The survey was focusing on practices related to the management of sanitation facilities (latrines and tanks).
 
@@ -255,29 +259,8 @@ ggplot(data = tb4,
   geom_col()
 ```
 
-#Conclusions
+# Conclusions
 
 This research shows that people living in the townships of Abobo and Yopougon use shared latrines. This is contributing to septic tank failure, as well as the occurrence of diseases such as malaria and typhoid fever. However, promoting awareness and establishing sustainable sanitation management initiatives could help to improve people's living conditions.
 
-#References
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
